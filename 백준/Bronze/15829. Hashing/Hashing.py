@@ -29,14 +29,15 @@ alphabet = {
 
 n = int(input())
 word = input()
-words = list()
-sum = 0
-i = 0
+M = 1234567891
+r = 31
+
+hash_value = 0
+r_pow = 1  # r^i를 저장하는 변수
 
 for char in word:
-    words.append(char)
+    hash_value += (alphabet[char] * r_pow) % M
+    r_pow = (r_pow * r) % M  # r^i를 계속 모듈로 연산
+    hash_value %= M  # 결과도 모듈로 연산
 
-    sum = sum + (alphabet[char] * (31 ** i))
-    i = i + 1
-
-print(sum)
+print(hash_value)
