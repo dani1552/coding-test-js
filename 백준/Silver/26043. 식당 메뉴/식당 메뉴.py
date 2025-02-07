@@ -1,8 +1,7 @@
 import sys
 from collections import deque
 
-input = sys.stdin.read
-data = input().splitlines()
+data = sys.stdin.read().splitlines()
 
 n = int(data[0])
 
