@@ -1,10 +1,3 @@
-n = int(input())
-nums = []
-
-for i in range(n):
-    temp = list(map(int, input().split()))
-    nums.append(temp)
-
 def pooling(size, x, y):
     mid = size // 2
 
@@ -21,5 +14,12 @@ def pooling(size, x, y):
     answer = [lt, rt, lb, rb]
     answer.sort()
     return answer[-2]
+
+n = int(input())
+nums = []
+
+for i in range(n):
+    temp = list(map(int, input().split()))
+    nums.append(temp)
 
 print(pooling(n, 0, 0))
