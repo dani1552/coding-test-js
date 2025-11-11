@@ -1,0 +1,14 @@
+function solution(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i; j < arr.length; j++) {
+            if (arr[i][j] === arr[j][i]) {
+                result = true;
+            } else {
+                result = false;
+                return +result;
+            }
+        }
+        
+        return +result;
+    }
+}
