@@ -1,15 +1,17 @@
 const fs = require("fs");
-const input = fs.readFileSync(0, "utf-8").trim().split("\n");
+const input = fs.readFileSync(0, "utf8").trim().split("\n");
 
-const count = Number(input[0]);
+const k = +input[0];
 let stack = [];
 
-for (let i = 1; i <= count; i++) {
-  if (input[i] === "0") {
-    stack.pop();
+for (let i = 1; i <= k; i++) {
+  if (input[i] !== "0") {
+    stack.push(input[i]);
   } else {
-    stack.push(Number(input[i]));
+    stack.pop();
   }
 }
 
-console.log(stack.reduce((acc, cur) => acc + cur, 0));
+console.log(
+  stack.length > 0 ? stack.map(Number).reduce((sum, e) => sum + e) : 0
+);
