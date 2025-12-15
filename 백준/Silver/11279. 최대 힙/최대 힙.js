@@ -1,78 +1,56 @@
 const fs = require("fs");
 const input = fs.readFileSync(0, "utf8").trim().split("\n");
 
-class MaxHeap {
-  constructor() {
-    this.heap = [];
-  }
+const n = +input[0];
+const heap = [];
+const result = [];
 
-  push(value) {
-    this.heap.push(value);
-    this.bubbleUp();
-  }
+function push(x) {
+  heap.push(x);
+  let idx = heap.length - 1;
 
-  bubbleUp() {
-    let index = this.heap.length - 1;
+  while (idx > 0) {
+    const parent = Math.floor((idx - 1) / 2);
+    if (heap[parent] >= heap[idx]) break;
 
-    while (index > 0) {
-      let parent = Math.floor((index - 1) / 2);
-
-      if (this.heap[parent] >= this.heap[index]) break;
-
-      [this.heap[parent], this.heap[index]] = [
-        this.heap[index],
-        this.heap[parent],
-      ];
-      index = parent;
-    }
-  }
-
-  pop() {
-    if (this.heap.length === 0) return 0;
-    if (this.heap.length === 1) return this.heap.pop();
-
-    const result = this.heap[0];
-    this.heap[0] = this.heap.pop();
-    this.bubbleDown();
-    return result;
-  }
-
-  bubbleDown() {
-    let index = 0;
-
-    while (true) {
-      let left = index * 2 + 1;
-      let right = index * 2 + 2;
-      let largest = index;
-
-      if (left < this.heap.length && this.heap[left] > this.heap[largest]) {
-        largest = left;
-      }
-      if (right < this.heap.length && this.heap[right] > this.heap[largest]) {
-        largest = right;
-      }
-      if (largest === index) break;
-
-      [this.heap[index], this.heap[largest]] = [
-        this.heap[largest],
-        this.heap[index],
-      ];
-      index = largest;
-    }
+    [heap[parent], heap[idx]] = [heap[idx], heap[parent]];
+    idx = parent;
   }
 }
 
-const N = +input[0];
-const heap = new MaxHeap();
-let answer = [];
+function pop() {
+  if (heap.length === 0) return 0;
+  if (heap.length === 1) return heap.pop();
 
-for (let i = 1; i <= N; i++) {
-  const x = Number(input[i]);
-  if (x === 0) {
-    answer.push(heap.pop());
-  } else {
-    heap.push(x);
+  const max = heap[0];
+  heap[0] = heap.pop();
+
+  let idx = 0;
+  while (true) {
+    let left = idx * 2 + 1;
+    let right = idx * 2 + 2;
+    let largest = idx;
+
+    if (left < heap.length && heap[left] > heap[largest]) {
+      largest = left;
+    }
+    if (right < heap.length && heap[right] > heap[largest]) {
+      largest = right;
+    }
+
+    if (largest === idx) break;
+
+    [heap[idx], heap[largest]] = [heap[largest], heap[idx]];
+    idx = largest;
   }
+
+  return max;
 }
 
-console.log(answer.join("\n"));
+for (let i = 1; i <= n; i++) {
+  const x = +input[i];
+  if (x === 0) result.push(pop());
+  else push(x);
+}
+
+console.log(result.join("\n"));
